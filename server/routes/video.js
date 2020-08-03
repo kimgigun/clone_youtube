@@ -29,6 +29,29 @@ let storage = multer.diskStorage({
 const upload = multer({storage:storage}).single('file');
 
 
+router.get('/getVideos', (req,res)=>{
+    //비디오를 db에서 가져와서 클라이언테에게 보낸다
+
+    Video.find().populate('writer').exec((err,videos)=>{
+        if(err) return res.status(400).send(err);
+        res.status(200).json({success: true, videos})
+    })
+    
+})
+
+
+router.post('/getVideoDetail', (req, res)=>{
+console.log("req")
+console.log(req);
+    Video.findOne({"_id":req.body.videoId}).populate('writer').exec((err,videos)=>{
+        if(err) return res.status(400).send(err);
+        res.status(200).json({success: true, videoDetail:videos})
+    })
+    
+})
+
+
+
 router.post('/uploadfiles',(req, res) =>{
 
     upload(req, res, err =>{
@@ -38,6 +61,8 @@ router.post('/uploadfiles',(req, res) =>{
         return res.json({success:true, url:res.req.file.path, fileName:res.req.file.filename});
     })
 })
+
+
 
 router.post("/thumbnail", (req, res) => {
 
@@ -78,7 +103,6 @@ router.post('/uploadVideo',(req, res) =>{
 
     //비디오 정보를 저장한다.
     const video = new Video(req.body);
-
     video.save((err, video)=>{
         if(err) return res.json({success:false, err})
         res.status(200).json({success:true})

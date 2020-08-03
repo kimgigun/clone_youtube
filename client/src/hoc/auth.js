@@ -14,9 +14,9 @@ export default function (SpecificComponent, option, adminRoute = null) {
             dispatch(auth()).then(response => {
                 //Not Loggined in Status 
                 if (!response.payload.isAuth) {
-                    if (option) {
-                        props.history.push('/login')
-                    }
+                    // if (option) {
+                    //     props.history.push('/login')
+                    // }
                     //Loggined in Status 
                 } else {
                     //supposed to be Admin page, but not admin person wants to go inside

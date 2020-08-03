@@ -58,8 +58,8 @@ function VideoUploadPage(props) {
         }
 
         Axios.post('/api/video/uploadVideo',variables).then(response => {
+            
             if(response.data.success){
-
                 console.log("업로드 true");
                 message.success('성공적으로 업로드 했습니다.');
 
@@ -115,6 +115,7 @@ function VideoUploadPage(props) {
     return (
    
         <div style={{maxWidth:'700px', margin:'2rem auto'}}>
+            
             <div style={{textAlign:'center', marginBottom:'2rem'}}>
                 <Title level={2}>upload Video</Title>
             </div>
